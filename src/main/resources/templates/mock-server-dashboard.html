@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Mocking Server</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            name="viewport"/>
+    <link rel="shortcut icon" type="image/png" th:href="@{/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/font-awesome/css/all.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/styles.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/toastr/css/toastr.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap-toggle/css/bootstrap-toggle.css}"/>
+
+    <script th:src="@{/assets/vendor/jquery/jquery-3.5.1.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/assets/vendor/bootstrap-notify/bootstrap-notify.js}"></script>
+    <script th:src="@{/assets/vendor/bootstrap-toggle/js/bootstrap-toggle.js}"></script>
+    <script th:src="@{/assets/vendor/toastr/js/toastr.js}"></script>
+    <script th:src="@{/assets/vendor/jquery-jeditable/jquery.jeditable.js}"></script>
+
+</head>
+<body style="background-color:#f8f9fa!important; padding-top:0px !important">
+<center><h1 class="display-3">Mock<strong>Server</strong></h1></center>
+<div class="container" style="max-width:99%">
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <div class="row">
+            <div class="col-4">
+                <button type="button" class="btn btn-primary" id="addMockBtn" name="addMockBtn"><i
+                        class="fas fa-plus"></i> Add Mock Request
+                </button>
+            </div>
+        </div>
+        <br>
+
+        <div th:switch="${mockServicesList}" class="row">
+            <div class="col-12">
+                <h2 th:case=null>No available Mock Services!</h2>
+                <div th:case="*">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Delay(ms)</th>
+                            <th>Mock ID</th>
+                            <th>Status Code</th>
+                            <th>Content Type</th>
+                            <th>Encoding</th>
+                            <th>Body</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="mockService : ${mockServicesList}">
+                            <td><input type="checkbox" name="mockServiceResponseStatus"
+                                       th:mockId="${mockService.mockId}" data-toggle="toggle" data-onstyle="success"
+                                       data-offstyle="danger" data-height="15" data-on="SUCCESS" data-off="FAILURE"
+                                       th:checked="${mockService.responseStatus} == SUCCESS">
+                            <td>
+                                <div class="form-inline">
+                                    <p class="editable-text-full card-text example"
+                                       th:id="'mockServiceDelay-' + ${mockService.mockId}"
+                                       th:text="${mockService.delay}"></p>
+                                </div>
+                            </td>
+                            <td th:text="${mockService.mockId}"></td>
+                            <td th:text="${mockService.successResponseStatusCode}"></td>
+                            <td th:text="${mockService.contentType}"></td>
+                            <td th:text="${mockService.encoding}"></td>
+                            <td style="word-wrap: break-word;" width="30%"
+                                th:text="${mockService.successResponseBody}"></td>
+                            <td>
+                                <button name="viewMockBtn" th:mockId="${mockService.mockId}"
+                                        class="btn btn-warning btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button name="modifyMockBtn" th:mockId="${mockService.mockId}"
+                                        class="btn btn-primary btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button name="deleteMockBtn" th:mockId="${mockService.mockId}"
+                                        class="btn btn-danger btn-sm">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mockRequestModal" tabindex="-1" role="dialog" aria-labelledby="mockRequestModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form id="mockForm" method="post">
+                    <input type="hidden" name="responseStatus" value="SUCCESS">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mock-form-modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="col-form-label">Mock Request URL:</label>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <input type="text" id="mock-request-url" class="form-control form-control-sm"
+                                           readonly>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button id="copy-mock-request-url"
+                                        class="btn btn-primary btn-sm" disabled>
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="mock-form-request-type" class="col-form-label">Request Type:</label>
+                                    <select class="custom-select custom-select-sm" id="mock-form-request-type"
+                                            name="requestType">
+                                        <option value="GET">GET</option>
+                                        <option value="POST">POST</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="mock-form-mock-id" class="col-form-label">Mock ID:</label>
+                                    <input type="text" id="mock-form-mock-id" name="mockId"
+                                           class="form-control form-control-sm" readonly>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="mock-form-mock-id" class="col-form-label">Mock ID Strategy:</label>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary btn-sm active">
+                                            <input type="radio" name="mock-id-strategy" value="Auto" autocomplete="off"
+                                                   checked> Auto
+                                        </label>
+                                        <label class="btn btn-secondary btn-sm">
+                                            <input type="radio" name="mock-id-strategy" value="Custom"
+                                                   autocomplete="off"> Custom
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="mock-form-response-content-type" class="col-form-label">Response Content
+                                        Type:</label>
+                                    <select type="text" id="mock-form-response-content-type" name="contentType"
+                                            class="custom-select custom-select-sm">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="mock-form-response-encoding" class="col-form-label">Response
+                                        Encoding:</label>
+                                    <select type="text" id="mock-form-response-encoding" name="encoding"
+                                            class="custom-select custom-select-sm">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <label class="col-form-label">Headers:</label>
+                                    <button type="button" class="btn btn-success btn-sm mb-2 addButton">Add</button>
+                                    <div class="form-inline mock-form-header-template">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="mock-form-success-response-status-code" class="col-form-label">Success
+                                        Response Status:</label>
+                                    <select type="text" id="mock-form-success-response-status-code"
+                                            name="successResponseStatusCode"
+                                            class="custom-select custom-select-sm">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="mock-form-failure-response-status-code" class="col-form-label">Failure
+                                        Response Status:</label>
+                                    <select type="text" id="mock-form-failure-response-status-code"
+                                            name="failureResponseStatusCode"
+                                            class="custom-select custom-select-sm">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="mock-form-success-response-body" class="col-form-label">Success Response
+                                        Body:</label>
+                                    <textarea class="form-control" id="mock-form-success-response-body"
+                                              name="successResponseBody"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="mock-form-failure-response-body" class="col-form-label">Failure Response
+                                        Body:</label>
+                                    <textarea class="form-control" id="mock-form-failure-response-body"
+                                              name="failureResponseBody"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" id="mock-form-modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/assets/js/MockServiceController.js}"></script>
+</div>
+
+<footer class="footer"></footer>
+</body>
+</html>

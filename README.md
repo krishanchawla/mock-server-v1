@@ -87,3 +87,8 @@ java -jar MockServer-1.0.0.jar
 The Mock Server will be started on the port provided in application.properties file.
 
 ⚠️ While it is the most recent codebase, there may be issues! In such cases, please raise an issue. It is also not recommended to run this as root.
+
+## Contact
+
+Have any issues or suggestions in regards to the project? Mark it to below details
+Krishan Chawla - krishanchawla1467@gmail.com

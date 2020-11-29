@@ -34,7 +34,7 @@ src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
 
 ## Pre-requisites
 
-- **Java Development Kit**
+- **Java Development Kit** ([JDK8](https://www.oracle.com/in/java/technologies/javase/javase-jdk8-downloads.html))
 - **Database** The Mock Server requires a database to store the mock Requests. The server can run with Mysql Database or H2 Database. If you are looking to run using Mysql database, mysql server is required.
 
 ### Installation

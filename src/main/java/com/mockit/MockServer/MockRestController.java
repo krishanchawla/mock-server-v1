@@ -1,9 +1,9 @@
-package com.mockit.MockServer;
+package com.mockit.mockserver;
 
-import com.mockit.MockServer.dto.HeaderDTO;
-import com.mockit.MockServer.dto.MockRequestDTO;
-import com.mockit.MockServer.entity.MockRequest;
-import com.mockit.MockServer.service.MockService;
+import com.mockit.mockserver.dto.HeaderDTO;
+import com.mockit.mockserver.dto.MockRequestDTO;
+import com.mockit.mockserver.entity.MockRequest;
+import com.mockit.mockserver.service.MockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

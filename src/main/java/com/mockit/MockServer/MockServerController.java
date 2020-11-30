@@ -1,7 +1,7 @@
-package com.mockit.MockServer;
+package com.mockit.mockserver;
 
-import com.mockit.MockServer.entity.MockRequest;
-import com.mockit.MockServer.repository.MockServiceRepository;
+import com.mockit.mockserver.entity.MockRequest;
+import com.mockit.mockserver.repository.MockServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

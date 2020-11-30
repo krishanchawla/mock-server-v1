@@ -1,4 +1,4 @@
-package com.mockit.MockServer.dto;
+package com.mockit.mockserver.dto;
 
 import java.util.List;
 

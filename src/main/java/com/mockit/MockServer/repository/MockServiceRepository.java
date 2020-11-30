@@ -1,6 +1,6 @@
-package com.mockit.MockServer.repository;
+package com.mockit.mockserver.repository;
 
-import com.mockit.MockServer.entity.MockRequest;
+import com.mockit.mockserver.entity.MockRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

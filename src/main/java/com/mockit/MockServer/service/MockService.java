@@ -1,10 +1,10 @@
-package com.mockit.MockServer.service;
+package com.mockit.mockserver.service;
 
-import com.mockit.MockServer.dto.HeaderDTO;
-import com.mockit.MockServer.dto.MockRequestDTO;
-import com.mockit.MockServer.entity.MockRequest;
-import com.mockit.MockServer.exception.ResourceNotFoundException;
-import com.mockit.MockServer.repository.MockServiceRepository;
+import com.mockit.mockserver.dto.HeaderDTO;
+import com.mockit.mockserver.dto.MockRequestDTO;
+import com.mockit.mockserver.entity.MockRequest;
+import com.mockit.mockserver.exception.ResourceNotFoundException;
+import com.mockit.mockserver.repository.MockServiceRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

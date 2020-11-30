@@ -1,6 +1,6 @@
-package com.mockit.MockServer.entity;
+package com.mockit.mockserver.entity;
 
-import com.mockit.MockServer.dto.HeaderDTO;
+import com.mockit.mockserver.dto.HeaderDTO;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package com.mockit.MockServer.exception;
+package com.mockit.mockserver.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

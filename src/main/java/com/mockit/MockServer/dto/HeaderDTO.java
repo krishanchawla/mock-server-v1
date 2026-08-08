@@ -11,6 +11,8 @@ public class HeaderDTO {
     private Integer id;
 
     private String name;
+
+    @Column(name = "header_value")
     private String value;
 
     public Integer getId() {

@@ -3,7 +3,7 @@ package com.mockit.mockserver.entity;
 import com.mockit.mockserver.dto.HeaderDTO;
 import org.hibernate.annotations.Cascade;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity

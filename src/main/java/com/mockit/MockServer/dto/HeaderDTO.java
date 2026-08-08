@@ -1,6 +1,6 @@
 package com.mockit.mockserver.dto;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "MOCK_SERVICE_HEADERS")
@@ -11,6 +11,8 @@ public class HeaderDTO {
     private Integer id;
 
     private String name;
+
+    @Column(name = "header_value")
     private String value;
 
     public Integer getId() {

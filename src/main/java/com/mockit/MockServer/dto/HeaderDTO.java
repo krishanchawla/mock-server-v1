@@ -1,6 +1,6 @@
 package com.mockit.mockserver.dto;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "MOCK_SERVICE_HEADERS")

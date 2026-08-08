@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.Optional;
 
 public interface MockServiceRepository extends JpaRepository<MockRequest, Integer> {
@@ -18,11 +18,11 @@ public interface MockServiceRepository extends JpaRepository<MockRequest, Intege
 
     @Transactional
     @Modifying
-    @Query("UPDATE MockRequest SET delay = :delay where mock_id = :mockId")
+    @Query("UPDATE MockRequest SET delay = :delay where mockId = :mockId")
     int updateMockServiceDelay(@Param("mockId") String mockId, @Param("delay") Integer delay);
 
     @Transactional
     @Modifying
-    @Query("UPDATE MockRequest SET response_status = :responseStatus where mock_id = :mockId")
+    @Query("UPDATE MockRequest SET responseStatus = :responseStatus where mockId = :mockId")
     int updateMockServiceResponseStatus(@Param("mockId") String mockId, @Param("responseStatus") String responseStatus);
 }

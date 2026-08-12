@@ -240,6 +240,13 @@
         </div>
     </div>
 
+    <!-- Deployed behind a servlet context-path (see application.properties), so the plain static
+         MockServiceController.js can't use Thymeleaf's @{...} context-aware URLs directly the way
+         this page's own asset links do -- it isn't template-processed. Inject the resolved context
+         path once here instead, so the AJAX calls below can prefix it themselves. -->
+    <script th:inline="javascript">
+        var CONTEXT_PATH = /*[[@{/}]]*/ '/';
+    </script>
     <script th:src="@{/assets/js/MockServiceController.js}"></script>
 </div>
 

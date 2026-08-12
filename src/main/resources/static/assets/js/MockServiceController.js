@@ -145,7 +145,7 @@ $(document).ready(function() {
             var notify = $.notify({ message: 'Creating New Mock Request', icon: "fas fa-info-circle"});
 
             $.ajax({
-                    url: '/api/addMock',
+                    url: CONTEXT_PATH + 'api/addMock',
                     type: 'POST',
                     contentType: "application/json",
                     data: request,
@@ -171,7 +171,7 @@ $(document).ready(function() {
             var notify = $.notify({ message: 'Modifying Mock Request', icon: "fas fa-info-circle"});
 
             $.ajax({
-                url: '/api/modifyMock',
+                url: CONTEXT_PATH + 'api/modifyMock',
                 type: 'POST',
                 contentType: "application/json",
                 data: request,
@@ -217,7 +217,7 @@ $(document).ready(function() {
         var mockId = $(this).attr('mockId');
 
         $.ajax({
-            url: '/api/deleteMock/' + mockId,
+            url: CONTEXT_PATH + 'api/deleteMock/' + mockId,
             type: 'GET',
             success: function(data) {
                 setTimeout(function() {
@@ -249,11 +249,11 @@ $(document).ready(function() {
         var baseUrl = window.location.origin;
 
         $.ajax({
-            url: '/api/getMock/' + mockId,
+            url: CONTEXT_PATH + 'api/getMock/' + mockId,
             type: 'GET',
             success: function(data) {
                 $('#mockRequestModal').modal('show');
-                $('#mockRequestModal #mock-request-url').val(baseUrl + "/mock/" + data.mockId);
+                $('#mockRequestModal #mock-request-url').val(baseUrl + CONTEXT_PATH + "mock/" + data.mockId);
                 $('#mockRequestModal #copy-mock-request-url').prop('disabled', false);
                 $('#mockRequestModal #mock-form-modal-title').text("Mock Request - " + data.mockId);
                 $('#mockRequestModal #mock-form-request-type').val(data.requestType).prop('disabled', true);
@@ -283,11 +283,11 @@ $(document).ready(function() {
         var baseUrl = window.location.origin;
 
         $.ajax({
-            url: '/api/getMock/' + mockId,
+            url: CONTEXT_PATH + 'api/getMock/' + mockId,
             type: 'GET',
             success: function(data) {
                 $('#mockRequestModal').modal('show');
-                $('#mockRequestModal #mock-request-url').val(baseUrl + "/mock/" + data.mockId);
+                $('#mockRequestModal #mock-request-url').val(baseUrl + CONTEXT_PATH + "mock/" + data.mockId);
                 $('#mockRequestModal #copy-mock-request-url').prop('disabled', false);
                 $('#mockRequestModal #mock-form-modal-title').text("Mock Request - " + data.mockId);
                 $('#mockRequestModal #mock-form-request-type').val(data.requestType);
@@ -317,7 +317,7 @@ $(document).ready(function() {
     });
 
     var notify;
-    $(".editable-text-full").editable("/api/updateMockDelay", {
+    $(".editable-text-full").editable(CONTEXT_PATH + "api/updateMockDelay", {
         id : "mockId",
         type : "text",
         cancel : '<button type="cancel" class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button>',
@@ -347,7 +347,7 @@ $(document).ready(function() {
 
         var data = { "mockId": mockId, "value": status };
         $.ajax({
-            url: '/api/updateMockResponseStatus',
+            url: CONTEXT_PATH + 'api/updateMockResponseStatus',
             type: 'POST',
             data: data,
             success: function(data) {
